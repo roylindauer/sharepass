@@ -10,6 +10,7 @@ date_default_timezone_set('America/Los_Angeles');
  * Once the link is used the data is deleted from the system permamently.
  */
 
+require_once 'vendor/autoload.php';
 require_once 'lib/sharepass.php';
 
 $link = false;

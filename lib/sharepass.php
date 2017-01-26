@@ -1,5 +1,9 @@
 <?php
 
+function getEncryptionKey() {
+	return 'testkey';
+}
+
 function isLinkRequest() {
 	if (isset($_GET['key'])) {
 		return true;
@@ -18,6 +22,18 @@ function generateLink() {
 	if (isset($_POST['mydata'])) {
 		$mydata = filter_var($_POST['mydata']);
 	}
+	
+	$encryption_key = 'testkey';
+	
+	$encrypt = new JaegerApp\Encrypt();
+	$encrypt->setKey(getEncryptionKey());
+	$encoded = $encrypt->encode($mydata);
+	$decoded = $encrypt->decode($encoded);
+	$guid = $encrypt->guid();
+	
+	print_r($encoded);
+	print_r($decoded);
+	print_r($guid);
 	
 	// encrypt the data
 	

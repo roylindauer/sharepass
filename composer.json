@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jaeger-app/encrypt": "^0.1.3"
+    }
+}
