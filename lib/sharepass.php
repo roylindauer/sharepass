@@ -41,5 +41,5 @@ function generateLink() {
 	// save to db
 	// INSERT INTO linkdata VALUES('', KEY, ENCRYPTED_DATA);
 	
-	return sprintf('https://tools.roylindauer.com/?key=%s', $encryptionKey);
+	return sprintf('https://sharepass.roylindauer.com/?key=%s', $encryptionKey);
 }
