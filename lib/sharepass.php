@@ -71,6 +71,9 @@ function processLink() {
 	$encrypt = new JaegerApp\Encrypt();
 	$encrypt->setKey($encryptionKey);
 	$decoded = $encrypt->decode($row['data']);
+    
+    // Clean up data because you know, user submitted and all that.
+    $decoded = filter_var($decoded, FILTER_SANITIZE_SPECIAL_CHARS);
 	
 	return $decoded;
 }
