@@ -13,8 +13,7 @@ function connectMysql() {
         getenv('ROYLSP_MYSQL_NAME'));
 
     if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        return false;
+        die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
     }
     
     return $mysqli;
@@ -37,12 +36,41 @@ function newEncryptionKey() {
 function processLink() {
 	$encryptionKey = filter_var($_GET['key']);
 	
-	// get encrypted data from db based on $encryptionKey...
-    $data = 'IMAGINE THIS IS ENCRYPTED DATA';
-	
+    // Database stuff
+    $mysqli = connectMysql();
+    if(!($stmt = $mysqli->prepare('SELECT `data` FROM `linkdata` WHERE `key` = ?'))) {
+        die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
+    }
+    if(!$stmt->bind_param('s', $encryptionKey)) {
+        die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    if (!$stmt->execute()) {
+        die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    $stmt->close();
+    
+    if ($res->num_rows != 1) {
+        die('This link no longer exists.');
+    }
+    
+    // Delete the data
+    $mysqli = connectMysql();
+    if(!($stmt = $mysqli->prepare('DELETE FROM `linkdata` WHERE `key` = ?'))) {
+        die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
+    }
+    if(!$stmt->bind_param('s', $encryptionKey)) {
+        die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    if (!$stmt->execute()) {
+        die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    
+    // Encrypt stuff
 	$encrypt = new JaegerApp\Encrypt();
 	$encrypt->setKey($encryptionKey);
-	$decoded = $encrypt->decode($data);
+	$decoded = $encrypt->decode($row['data']);
 	
 	return $decoded;
 }
@@ -59,17 +87,24 @@ function generateLink() {
 		$mydata = filter_var($_POST['mydata']);
 	}
 	
+    // Encrypt stuff
 	$encryptionKey = newEncryptionKey();
-	
 	$encrypt = new JaegerApp\Encrypt();
 	$encrypt->setKey($encryptionKey);
 	$encoded = $encrypt->encode($mydata);
 	$guid = $encrypt->guid();
 	
-	// encrypt the data
-	
-	// save to db
-	// INSERT INTO linkdata VALUES('', KEY, ENCRYPTED_DATA);
+	// Database Stuff
+    $mysqli = connectMysql();
+    if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` VALUES("", ?, ?)'))) {
+        die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
+    }
+    if(!$stmt->bind_param('ss', $encryptionKey, $encoded)) {
+        die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+    if (!$stmt->execute()) {
+        die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
 	
 	return sprintf('%s?key=%s', getenv('ROYLSP_DOMAIN'), $encryptionKey);
 }
