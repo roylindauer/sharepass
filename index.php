@@ -1,24 +1,5 @@
 <?php
-date_default_timezone_set('America/Los_Angeles');
-
-/**
- * Generate a one-time link to share sensitive data with 
- * friends and colleauges. 
- * 
- * Input the data you want to share.
- * The data is encrypted and a link is generated.
- * Once the link is used the data is deleted from the system permamently.
- */
-
-require_once 'vendor/autoload.php';
-require_once 'lib/sharepass.php';
-
-$link = false;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$link = generateLink();
-}
-
+require_once 'lib/bootstrap.php';
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -37,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<h1>Share Password</h1>
+					<h1><a href="/">Share Password</a></h1>
 					<p class="lead">Generate a one-time use link to share sensitive information with a friend or colleague.</p>
 				</div>
 			</div>
 		</div>
 		<hr>
 
-		<?php if ($link !== false): ?>
+		<?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 text-center">
@@ -53,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						Your unique link has been created! 
 					</div>
 					<div class="well well-lg">
-						<p style="font-size: 2rem;"><?=$link?></p>
+						<p style="font-size: 2rem;"><?=generateLink()?></p>
 					</div>
 				</div>
 			</div>
@@ -61,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<hr>
 		<?php endif; ?>
 		
-		<?php if (isLinkRequest()): ?>
+		<?php if (isset($_GET['key']) && $_SERVER['REQUEST_METHOD'] === 'GET'): ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
