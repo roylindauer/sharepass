@@ -25,7 +25,7 @@ function connectMysql() {
  * @return string
  */
 function newEncryptionKey() {
-	return uniqid();
+    return uniqid();
 }
 
 /**
@@ -34,8 +34,8 @@ function newEncryptionKey() {
  * @return string
  */
 function processLink() {
-	$encryptionKey = filter_var($_GET['key']);
-	
+    $encryptionKey = filter_var($_GET['key']);
+    
     // Database stuff
     $mysqli = connectMysql();
     if(!($stmt = $mysqli->prepare('SELECT `data` FROM `linkdata` WHERE `key` = ?'))) {
@@ -68,14 +68,14 @@ function processLink() {
     }
     
     // Encrypt stuff
-	$encrypt = new JaegerApp\Encrypt();
-	$encrypt->setKey($encryptionKey);
-	$decoded = $encrypt->decode($row['data']);
+    $encrypt = new JaegerApp\Encrypt();
+    $encrypt->setKey($encryptionKey);
+    $decoded = $encrypt->decode($row['data']);
     
     // Clean up data because you know, user submitted and all that.
     $decoded = filter_var($decoded, FILTER_SANITIZE_SPECIAL_CHARS);
-	
-	return $decoded;
+    
+    return $decoded;
 }
 
 /**
@@ -84,30 +84,31 @@ function processLink() {
  * @return string
  */
 function generateLink() {
-	
-	$mydata = '';
-	if (isset($_POST['mydata'])) {
-		$mydata = filter_var($_POST['mydata']);
-	}
-	
+    
+    $mydata = '';
+    if (isset($_POST['mydata'])) {
+        $mydata = filter_var($_POST['mydata']);
+    }
+    
     // Encrypt stuff
-	$encryptionKey = newEncryptionKey();
-	$encrypt = new JaegerApp\Encrypt();
-	$encrypt->setKey($encryptionKey);
-	$encoded = $encrypt->encode($mydata);
-	$guid = $encrypt->guid();
-	
-	// Database Stuff
+    $encryptionKey = newEncryptionKey();
+    $encrypt = new JaegerApp\Encrypt();
+    $encrypt->setKey($encryptionKey);
+    $encoded = $encrypt->encode($mydata);
+    $guid = $encrypt->guid();
+    $expires = date('Y-m-d H:i:s', strtotime('+1 day'));
+    
+    // Database Stuff
     $mysqli = connectMysql();
-    if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` VALUES("", ?, ?)'))) {
+    if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` VALUES("", ?, ?, ?)'))) {
         die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
     }
-    if(!$stmt->bind_param('ss', $encryptionKey, $encoded)) {
+    if(!$stmt->bind_param('sss', $encryptionKey, $encoded, $expires)) {
         die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     if (!$stmt->execute()) {
         die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
     }
-	
-	return sprintf('%s?key=%s', getenv('ROYLSP_DOMAIN'), $encryptionKey);
+    
+    return sprintf('%s?key=%s', getenv('ROYLSP_DOMAIN'), $encryptionKey);
 }
