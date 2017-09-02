@@ -4,7 +4,7 @@ require_once 'lib/bootstrap.php';
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Royl - Share Password</title>
+		<title>Royl - Sharepass</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<!-- Latest compiled and minified CSS -->
@@ -29,8 +29,8 @@ require_once 'lib/bootstrap.php';
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<h1><a href="/">Share Password</a></h1>
-					<p class="lead">Generate a one-time use link to share sensitive information with a friend or colleague.</p>
+					<h1><a href="/">Sharepass</a></h1>
+					<p class="lead">Generate a time-sensitive link to share a password with a colleague</p>
 				</div>
 			</div>
 		</div>
@@ -72,7 +72,7 @@ require_once 'lib/bootstrap.php';
 			<div class="row">
 				<div class="col-sm-12">		
 					<h2>Encrypt Data and Generate Link</h2>
-					<p>Enter the data you want to share. This can be a password, or other sensitive information. You can enter up to 255 characters. The data is encrypted at rest and during transit. Once the link is used the data is deleted forever.</p>
+					<p>Enter the data you want to share. This can be a password, or other sensitive information. You can enter up to 255 characters. The data is encrypted at rest and during transit. The link will function for 24 hours.</p>
 					<form action="./" method="POST">
 						<fieldset>
 							<div class="form-group">
