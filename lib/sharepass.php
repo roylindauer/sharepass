@@ -104,7 +104,7 @@ function generateLink() {
     if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` (`id`, `key`, `data`, `created`, `expires`) VALUES("", ?, ?, ?, ?)'))) {
         die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
     }
-    if(!$stmt->bind_param('sss', $encryptionKey, $encoded, $created, $expires)) {
+    if(!$stmt->bind_param('ssss', $encryptionKey, $encoded, $created, $expires)) {
         die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     if (!$stmt->execute()) {
