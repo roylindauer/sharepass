@@ -58,7 +58,7 @@ require_once 'lib/bootstrap.php';
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>Here is your Data</h2>
-					<div class="alert alert-warning"><p>The link data has been deleted. You will not be able to use this link again.</p></div>
+					<div class="alert alert-warning"><p>The link will expire in 24 hours.</p></div>
     					<div class="">
     						<pre style="white-space: normal;"><?=processLink()?></pre>
     					</div>

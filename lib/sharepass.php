@@ -38,7 +38,7 @@ function processLink() {
     
     // Database stuff
     $mysqli = connectMysql();
-    if(!($stmt = $mysqli->prepare('SELECT `data` FROM `linkdata` WHERE `key` = ?'))) {
+    if(!($stmt = $mysqli->prepare('SELECT `data`, `expires` FROM `linkdata` WHERE `key` = ?'))) {
         die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
     }
     if(!$stmt->bind_param('s', $encryptionKey)) {
@@ -54,20 +54,24 @@ function processLink() {
     if ($res->num_rows != 1) {
         die('This link no longer exists.');
     }
+
+    // Delete expired link
+    if (strtotime(date('Y-m-d H:i:s') > strtotime($row['expires']))  {
+        // Delete the data
+        $mysqli = connectMysql();
+        if(!($stmt = $mysqli->prepare('DELETE FROM `linkdata` WHERE `key` = ?'))) {
+            die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
+        }
+        if(!$stmt->bind_param('s', $encryptionKey)) {
+            die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+        if (!$stmt->execute()) {
+            die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+        die('This link has expired.');
+    }
     
-    // Delete the data
-    $mysqli = connectMysql();
-    if(!($stmt = $mysqli->prepare('DELETE FROM `linkdata` WHERE `key` = ?'))) {
-        die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
-    }
-    if(!$stmt->bind_param('s', $encryptionKey)) {
-        die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
-    }
-    if (!$stmt->execute()) {
-        die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-    }
-    
-    // Encrypt stuff
+    // Decode the payload
     $encrypt = new JaegerApp\Encrypt();
     $encrypt->setKey($encryptionKey);
     $decoded = $encrypt->decode($row['data']);
