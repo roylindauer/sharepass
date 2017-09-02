@@ -15,7 +15,8 @@ CREATE TABLE `linkdata` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` char(13) NOT NULL DEFAULT '',
   `data` text,
-  'expires' DATE NOT NULL DEFAULT 
+  `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `expires` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
