@@ -56,7 +56,7 @@ function processLink() {
     }
 
     // Delete expired link
-    if (strtotime(date('Y-m-d H:i:s') > strtotime($row['expires']))  {
+    if (strtotime(date('Y-m-d H:i:s')) > strtotime($row['expires']))  {
         // Delete the data
         $mysqli = connectMysql();
         if(!($stmt = $mysqli->prepare('DELETE FROM `linkdata` WHERE `key` = ?'))) {
