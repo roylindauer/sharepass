@@ -96,14 +96,15 @@ function generateLink() {
     $encrypt->setKey($encryptionKey);
     $encoded = $encrypt->encode($mydata);
     $guid = $encrypt->guid();
+    $created = date('Y-m-d H:i:s');
     $expires = date('Y-m-d H:i:s', strtotime('+1 day'));
     
     // Database Stuff
     $mysqli = connectMysql();
-    if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` (`id`, `key`, `data`, `expires`) VALUES("", ?, ?, ?)'))) {
+    if(!($stmt = $mysqli->prepare('INSERT INTO `linkdata` (`id`, `key`, `data`, `created`, `expires`) VALUES("", ?, ?, ?, ?)'))) {
         die("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
     }
-    if(!$stmt->bind_param('sss', $encryptionKey, $encoded, $expires)) {
+    if(!$stmt->bind_param('sss', $encryptionKey, $encoded, $created, $expires)) {
         die("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
     }
     if (!$stmt->execute()) {
