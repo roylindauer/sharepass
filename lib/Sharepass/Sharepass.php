@@ -5,7 +5,8 @@ class Sharepass {
 
     private $encryptionKey;
     public $linkdata = array(
-        'data' => false
+        'data_encoded' => false,
+        'data_raw' => false,
     );
 
     public function __construct(\Royl\Sharepass\Db $db) {
@@ -34,11 +35,11 @@ class Sharepass {
     }
 
     public function getLinkData() {
-        return $this->linkdata['data'];
+        return $this->linkdata['data_encoded'];
     }
 
     public function setLinkdata($data){
-        $this->linkdata['data'] = $data;
+        $this->linkdata['data_encoded'] = $data;
     }
 
     public function getEncryptionKey() {
@@ -87,14 +88,14 @@ class Sharepass {
     public function decryptLinkData() {
         $encrypt = new \JaegerApp\Encrypt();
         $encrypt->setKey($this->getEncryptionKey());
-        $this->setRawLinkData($encrypt->decode($this->linkdata['data']));
+        $this->setRawLinkData($encrypt->decode($this->linkdata['data_encoded']));
     }
 
     public function sanitizeLinkData() {
         return filter_var($this->getRawLinkData(), FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
-    function generateLink() {
+    public function generateLink() {
         $this->setRawLinkdata(filter_var($_POST['mydata']));
         $this->encryptLinkdata();
         $this->saveEncryptedLinkData();
