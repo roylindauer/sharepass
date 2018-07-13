@@ -1,0 +1,44 @@
+mysql:
+  image: mysql:latest
+  volumes_from:
+    - mysql_data
+  environment:
+    MYSQL_ROOT_PASSWORD: secret
+    MYSQL_DATABASE: project
+    MYSQL_USER: project
+    MYSQL_PASSWORD: project
+  expose:
+    - 3306
+
+mysql_data:
+  image: tianon/true
+  volumes:
+    - /var/lib/mysql
+
+nginx:
+  build: ./build/docker/nginx/
+  ports:
+      - 80:80
+  links:
+    - php
+  volumes:
+    - .:/var/www/html
+
+php:
+  build: ./build/docker/php/
+  expose:
+    - 9000
+    - 9999
+  links:
+    - mysql
+  volumes:
+    - .:/var/www/html
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  ports:
+    - 8080:80
+  links:
+    - mysql
+  environment:
+    PMA_HOST: mysql

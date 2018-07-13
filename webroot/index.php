@@ -1,5 +1,6 @@
 <?php
-require_once 'lib/bootstrap.php';
+require_once '../lib/bootstrap.php';
+$Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,22 +8,8 @@ require_once 'lib/bootstrap.php';
 		<title>Royl - Sharepass</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-	  <script>
-	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-	    ga('create', 'UA-38944987-5', 'auto');
-	    ga('send', 'pageview');
-
-	  </script>
   
 	</head>
 	<body>
@@ -45,7 +32,7 @@ require_once 'lib/bootstrap.php';
 						Your unique link has been created! 
 					</div>
 					<div class="well well-lg">
-						<p style="font-size: 2rem;"><?=generateLink()?></p>
+						<p style="font-size: 2rem;"><?=$Sharepass->generateLink()?></p>
 					</div>
 				</div>
 			</div>
@@ -60,7 +47,7 @@ require_once 'lib/bootstrap.php';
 					<h2>Here is your Data</h2>
 					<div class="alert alert-warning"><p>The link will expire in 24 hours.</p></div>
     					<div class="">
-    						<pre style="white-space: normal;"><?=processLink()?></pre>
+    						<pre style="white-space: normal;"><?=$Sharepass->decryptLink()?></pre>
     					</div>
     					<a href="./" class="btn btn-default">Create a new Link</a>
 				</div>
@@ -96,9 +83,7 @@ require_once 'lib/bootstrap.php';
 			</div>
 		</div>
 		
-    	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	</body>
 </html>

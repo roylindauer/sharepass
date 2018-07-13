@@ -11,7 +11,6 @@
 date_default_timezone_set('America/Los_Angeles');
 
 require_once 'vendor/autoload.php';
-require_once 'lib/sharepass.php';
 
 /*
  * Load env variables
