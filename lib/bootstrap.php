@@ -10,12 +10,14 @@
 
 date_default_timezone_set('America/Los_Angeles');
 
-require_once 'vendor/autoload.php';
+$BASEDIR = realpath(dirname(__FILE__));
+
+require_once $BASEDIR . '/vendor/autoload.php';
 
 /*
  * Load env variables
  */
-$Loader = (new josegonzalez\Dotenv\Loader('.env'))
+$Loader = (new josegonzalez\Dotenv\Loader($BASEDIR . '/.env'))
                ->parse()
                ->prefix('ROYLSP_')
                ->putenv(true);
