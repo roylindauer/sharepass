@@ -57,7 +57,7 @@ class Sharepass {
             $linkdata = $stmt->fetch();
 
             if (count($linkdata) < 1) {
-                die('This link no longer exists.');
+                throw Exception('This link no longer exists.');
             }
 
             $this->linkdata = $linkdata;
@@ -71,7 +71,7 @@ class Sharepass {
             if ($this->linkIsExpired())  {
                 $sql = 'DELETE FROM `linkdata` WHERE `key` = ?';
                 $stmt = $this->db->conn->executeQuery($sql, array($this->getEncryptionKey()));
-                die('This link has expired.');
+                throw Exception('This link has expired.');
             }
         } catch (\Exception $e) {
             die($e->getMessage());
