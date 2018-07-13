@@ -3,14 +3,14 @@ namespace Royl\Sharepass;
 
 class DecryptLink extends Linkdata {
 
-    public function getLinkData() {
+    public function getLinkData($key) {
+        $this->setEncryptionKey($key);
         $this->decryptLink();
         return $this->sanitizeLinkData();
     }
 
     public function decryptLink() {
         try {
-            $this->setEncryptionKey(filter_var($_GET['key']));
             $this->setLinkdata($this->DB->getLinkDataRecord($this->getEncryptionKey()));
             $this->deleteIfLinkExpired();
             $this->decryptLinkData();

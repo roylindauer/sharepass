@@ -1,11 +1,11 @@
 <?php
-namespace Royl\Sharepass;
+namespace Royl\Sharepass\Db;
 
 class DbLinkdata {
 
     public $DB;
 
-    public function __construct(\Royl\Sharepass\Db $DB) {
+    public function __construct(\Royl\Sharepass\Db\Db $DB) {
         $this->DB = $DB;
     }
 

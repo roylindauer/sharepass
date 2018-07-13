@@ -3,14 +3,14 @@ namespace Royl\Sharepass;
 
 class EncryptLink extends Linkdata {
 
-    public function getNewLink() {
+    public function getNewLinkKey($data) {
+        $this->setRawLinkdata($data);
         $this->saveLinkData();
-        return sprintf('%s?key=%s', getenv('ROYLSP_DOMAIN'), $this->getEncryptionKey());
+        return $this->getEncryptionKey();
     }
 
     public function saveLinkData() {
         $this->createDefaultEncryptionKey();
-        $this->setRawLinkdata(filter_var($_POST['mydata']));
         $this->encryptLinkdata();
         $this->DB->saveEncryptedLinkData($this->getEncryptionKey(), $this->getEncryptedLinkData());
     }
