@@ -1,5 +1,5 @@
 <?php
-require_once '../lib/bootstrap.php';
+require_once '../bootstrap.php';
 $Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
 ?><!DOCTYPE html>
 <html lang="en">
