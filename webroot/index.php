@@ -1,6 +1,7 @@
 <?php
 require_once '../bootstrap.php';
-$Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
+
+$DbLinkdata = new Royl\Sharepass\DbLinkdata($Db);
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,13 +18,16 @@ $Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
 			<div class="row">
 				<div class="col-sm-12">
 					<h1><a href="/">Sharepass</a></h1>
-					<p class="lead">Generate a time-sensitive link to share a password with a colleague</p>
+					<p class="lead">Encrypt data and share with a URL that expires after 24 hours.</p>
 				</div>
 			</div>
 		</div>
 		<hr>
 
 		<?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+			<?php
+			$EncryptLink = new \Royl\Sharepass\EncryptLink($DbLinkdata);
+			?>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 text-center">
@@ -32,7 +36,7 @@ $Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
 						Your unique link has been created! 
 					</div>
 					<div class="well well-lg">
-						<p style="font-size: 2rem;"><?=$Sharepass->generateLink()?></p>
+						<p style="font-size: 2rem;"><?=$EncryptLink->getNewLink()?></p>
 					</div>
 				</div>
 			</div>
@@ -41,13 +45,15 @@ $Sharepass = new \Royl\Sharepass\Sharepass(new \Royl\Sharepass\Db());
 		<?php endif; ?>
 		
 		<?php if (isset($_GET['key']) && $_SERVER['REQUEST_METHOD'] === 'GET'): ?>
+		<?php 
+		$DecryptLink = new \Royl\Sharepass\DecryptLink($DbLinkdata);
+		?>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>Here is your Data</h2>
-					<div class="alert alert-warning"><p>The link will expire in 24 hours.</p></div>
     					<div class="">
-    						<pre style="white-space: normal;"><?=$Sharepass->decryptLink()?></pre>
+    						<pre style="white-space: normal;"><?=$DecryptLink->getLinkData()?></pre>
     					</div>
     					<a href="./" class="btn btn-default">Create a new Link</a>
 				</div>

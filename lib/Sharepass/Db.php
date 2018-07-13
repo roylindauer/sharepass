@@ -14,4 +14,22 @@ class Db {
         );
         $this->conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     }
+
+    public function executeQuery($sql, $data) {
+        try {
+            $stmt = $this->conn->executeQuery($sql, $data);
+            return $stmt;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function insert($sql, $data) {
+        try {
+            $stmt = $this->conn->insert($sql, $data);
+            return $stmt;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

@@ -11,4 +11,4 @@ $Loader = (new josegonzalez\Dotenv\Loader($BASEDIR . '/.env'))
                ->prefix('ROYLSP_')
                ->putenv(true);
 
-
+$Db = new \Royl\Sharepass\Db();
