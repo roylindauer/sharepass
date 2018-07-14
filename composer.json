@@ -6,7 +6,8 @@
         "doctrine/migrations": "1.5",
         "symfony/http-kernel": "^3.4",
         "symfony/routing": "^3.4",
-        "symfony/templating": "^3.4"
+        "symfony/templating": "^3.4",
+        "doctrine/doctrine-migrations-bundle": "^1.0"
     },
     "config": {
         "platform": {

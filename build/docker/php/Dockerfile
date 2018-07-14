@@ -49,6 +49,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* && rm -rf && rm -rf /var/lib/cache/* && rm -rf /var/lib/log/* && rm -rf /tmp/*
 
 # Run this container as "webuser"
-RUN groupadd -r webuser && useradd -r -g webuser webuser
+RUN groupadd -r webuser && useradd -u 1000 -r -g webuser webuser
 RUN usermod -aG www-data webuser
 USER webuser

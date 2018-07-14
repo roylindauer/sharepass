@@ -4,15 +4,20 @@ namespace Royl\Sharepass\Db;
 class Db {
 
     public $conn;
+    public $conn_params;
 
     public function __construct() {
 
         $config = new \Doctrine\DBAL\Configuration();
-        $connectionParams = array(
+        $this->connectionParams = array(
             'url' => getenv('ROYLSP_DATABASE_URL'),
             'driver' => 'pdo_mysql',
         );
-        $this->conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        $this->conn = \Doctrine\DBAL\DriverManager::getConnection($this->connectionParams, $config);
+    }
+
+    public function getConnection() {
+        return $this->conn;
     }
 
     public function executeQuery($sql, $data) {
