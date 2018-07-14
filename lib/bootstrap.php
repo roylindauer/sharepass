@@ -8,7 +8,7 @@ define('BASEDIR', $BASEDIR);
 require_once BASEDIR . '/vendor/autoload.php';
 require_once BASEDIR . '/lib/routes.php';
 
-$Loader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
+$EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
                ->parse()
                ->prefix('ROYLSP_')
                ->putenv(true);

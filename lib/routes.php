@@ -17,10 +17,3 @@ $routes->add('view_link', new Route(
     array('key' => '(.*)')
 ));
 
-$routes->add('hello', new Route('/hello/{name}', array(
-    '_controller' => function (Request $request) {
-        return new Response(
-            sprintf("Hello %s", $request->get('name'))
-        );
-    })
-));

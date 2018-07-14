@@ -7,7 +7,7 @@ use Symfony\Component\Templating\Loader\FilesystemLoader;
 
 class AppTemplate {
     public $Templating;
-    public $template = 'welcome.php';
+    public $template = '';
     public $layout = '';
     public $variables = array();
 

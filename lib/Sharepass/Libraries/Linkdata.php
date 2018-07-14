@@ -1,5 +1,5 @@
 <?php
-namespace Royl\Sharepass;
+namespace Royl\Sharepass\Libraries;
 
 class Linkdata extends Sharepass {
 
