@@ -15,4 +15,4 @@ namespace :sharepass do
 
 end
 
-after 'deploy:published', 'trap:migrate'
+before 'deploy:published', 'sharepass:migrate'
