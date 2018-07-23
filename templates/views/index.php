@@ -2,10 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 text-center">
-            <h2>Here's your link!</h2>
-            <div class="alert alert-success" role="alert">
-                Your unique link has been created! 
-            </div>
+            <h2>Your link is ready</h2>
             <div class="well well-lg">
                 <p style="font-size: 2rem;"><?=getenv('ROYLSP_DOMAIN') . 'link/' . $key?></p>
             </div>
