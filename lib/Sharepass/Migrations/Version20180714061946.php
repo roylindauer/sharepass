@@ -19,8 +19,8 @@ class Version20180714061946 extends AbstractMigration
               `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
               `key` char(13) NOT NULL DEFAULT '',
               `data` text,
-              `created` DATETIME NULL',
-              `expires` DATETIME NULL,
+              `created` DATETIME NOT NULL DEFAULT '2018-01-01 00:00:00',
+              `expires` DATETIME NOT NULL DEFAULT '2018-01-01 00:00:00',
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
     }
