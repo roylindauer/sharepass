@@ -1,6 +1,6 @@
 <?php
 
-namespace \Royl\Sharepass\Migrations;
+namespace Royl\Sharepass\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
