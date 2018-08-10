@@ -7,7 +7,9 @@
         "symfony/http-kernel": "^3.4",
         "symfony/routing": "^3.4",
         "symfony/templating": "^3.4",
-        "doctrine/doctrine-migrations-bundle": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "symfony/config": "^3.4",
+        "symfony/dependency-injection": "^3.4"
     },
     "config": {
         "platform": {

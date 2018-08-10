@@ -2,31 +2,28 @@
 
 namespace Royl\Sharepass\Controllers;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Royl\Sharepass\Db;
-use Royl\Sharepass\Libraries;
+use Royl\Sharepass\Data;
+use Royl\Sharepass\Libraries\EncryptLink;
+use Royl\Sharepass\Libraries\DecryptLink;
 
 class LinkdataController extends AppController{
-    public function __construct() {
-        parent::__construct();
-        $this->DbLinkdata = new Db\DbLinkdata($this->DB);
+
+    public function index(Request $request) {
+        $this->setTemplate('index');
+        return $this->render();
     }
 
-    public function index(Request $request){
-        $EncryptLink = new \Royl\Sharepass\Libraries\EncryptLink($this->DbLinkdata);
-        
-        if ($request->getMethod() === 'POST') {
-            $this->setVar('key', $EncryptLink->getNewLinkKey(filter_var($_POST['mydata'])));
-        }
-
+    public function add(Request $request) {
+        $Model = $this->getService('model.linkdata');
+        $this->setVar('key', $Model->getNewLinkKey($_POST['mydata']));
         $this->setTemplate('index');
         return $this->render();
     }
     
     public function view(Request $request, $key){
-        $DecryptLink = new \Royl\Sharepass\Libraries\DecryptLink($this->DbLinkdata);
-        $this->setVar('linkdata', $DecryptLink->getLinkData($key));
+        $Model = $this->getService('model.linkdata');
+        $this->setVar('linkdata', $Model->getLinkData($key));
         $this->setTemplate('view');
         return $this->render();
     }

@@ -1,8 +1,10 @@
 <?php
 
+use Royl\Sharepass;
+
 date_default_timezone_set('America/Los_Angeles');
 
-$BASEDIR = realpath(dirname(dirname(__FILE__)));
+$BASEDIR = realpath(dirname(__DIR__));
 define('BASEDIR', $BASEDIR);
 
 require_once BASEDIR . '/vendor/autoload.php';
@@ -13,5 +15,5 @@ $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
                ->prefix('ROYLSP_')
                ->putenv(true);
 
-$Kernel = new Royl\Sharepass\Kernel($routes);
+$Kernel = new Sharepass\Kernel($routes);
 $Kernel->init();
