@@ -15,14 +15,14 @@ class LinkdataController extends AppController{
     }
 
     public function add(Request $request) {
-        $Model = $this->getService('model.linkdata');
+        $Model = get_service('model.linkdata');
         $this->setVar('key', $Model->getNewLinkKey($_POST['mydata']));
         $this->setTemplate('index');
         return $this->render();
     }
     
     public function view(Request $request, $key){
-        $Model = $this->getService('model.linkdata');
+        $Model = get_service('model.linkdata');
         $this->setVar('linkdata', $Model->getLinkData($key));
         $this->setTemplate('view');
         return $this->render();

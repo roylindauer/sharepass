@@ -4,8 +4,6 @@ namespace Royl\Sharepass\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use Royl\Sharepass\Template;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class AppController{
 
@@ -15,44 +13,15 @@ class AppController{
     public $Template;
 
     /**
-     * @var ContainerBuilder
+     * @var
      */
     public $Service;
 
-    public function __construct() {
-        $this->defineServices();
-        $this->Template = $this->getService('app.template');
-    }
-
     /**
-     * @todo move outside of appcontroller
+     * AppController constructor.
      */
-    private function defineServices() {
-        $this->Service = new ContainerBuilder();
-        $this->Service
-            ->register('app.template', '\Royl\Sharepass\Template\AppTemplate')
-            ->setPublic(true);
-
-        $this->Service
-            ->register('app.dbconnection', '\Royl\Sharepass\Libraries\Db')
-            ->setPublic(true);
-
-        $this->Service
-            ->register('data.linkdata', '\Royl\Sharepass\Data\Linkdata')
-            ->addArgument(new Reference('app.dbconnection'))
-            ->setPublic(true);
-
-        $this->Service
-            ->register('model.linkdata', '\Royl\Sharepass\Models\Linkdata')
-            ->addArgument(new Reference('app.dbconnection'))
-            ->addArgument(new Reference('data.linkdata'))
-            ->setPublic(true);
-
-        $this->Service->compile();
-    }
-
-    public function getService($service) {
-        return $this->Service->get($service);
+    public function __construct() {
+        $this->Template = get_service('app.template');
     }
 
     /**
