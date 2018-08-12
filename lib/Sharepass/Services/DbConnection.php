@@ -1,7 +1,7 @@
 <?php
-namespace Royl\Sharepass\Libraries;
+namespace Royl\Sharepass\Services;
 
-class Db {
+class DbConnection {
 
     public $conn;
     public $conn_params;

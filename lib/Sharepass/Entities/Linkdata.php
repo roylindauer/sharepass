@@ -1,7 +1,5 @@
 <?php
-namespace Royl\Sharepass\Libraries;
-
-use Royl\Sharepass\Data;
+namespace Royl\Sharepass\Entities;
 
 class Linkdata {
 
@@ -65,5 +63,27 @@ class Linkdata {
 
     public function linkIsExpired() {
         return strtotime(date('Y-m-d H:i:s')) > strtotime($this->getExpires());
+    }
+
+    public function encryptLinkdata($data) {
+        $this->setRawLinkdata($data);
+        $this->createDefaultEncryptionKey();
+
+        $encrypt = getService('app.encrypt');
+        $encrypt->setKey($this->getEncryptionKey());
+
+        $this->setEncryptedLinkdata($encrypt->encode($this->getRawLinkData()));
+    }
+
+    public function decryptLink() {
+        try {
+            $encrypt = getService('app.encrypt');
+            $encrypt->setKey($this->getEncryptionKey());
+
+            $this->setRawLinkData($encrypt->decode($this->getEncryptedLinkData()));
+            return $this->filterSpecialCharsFromLinkdata();
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
     }
 }

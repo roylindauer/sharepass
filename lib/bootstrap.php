@@ -10,7 +10,7 @@ define('BASEDIR', $BASEDIR);
 require_once BASEDIR . '/vendor/autoload.php';
 require_once BASEDIR . '/lib/routes.php';
 
-$Services = new Sharepass\Libraries\Services();
+$Services = new Sharepass\Services\Services();
 
 $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
                ->parse()
@@ -24,7 +24,7 @@ $Kernel->init();
  * @param $service
  * @return object
  */
-function get_service($service) {
+function getService($service) {
     global $Services;
     return $Services->get($service);
 }

@@ -1,27 +1,21 @@
 <?php
 namespace Royl\Sharepass\Models;
 
-use Royl\Sharepass\Libraries;
+use Royl\Sharepass\Services;
 
 class Linkdata {
-
     /**
-     * @var \Royl\Sharepass\Libraries\Db
-     */
-    public $DBConnection;
-
-    /**
-     * @var \Royl\Sharepass\Data\Linkdata
+     * @var \Royl\Sharepass\Database\Linkdata
      */
     public $Data;
 
-    public function __construct(\Royl\Sharepass\Data\Linkdata $Data) {
+    public function __construct(\Royl\Sharepass\Database\Linkdata $Data) {
         $this->Data = $Data;
     }
 
     public function createLink($data) {
         try {
-            $EncryptLinkdata = get_service('lib.encrypt_linkdata');
+            $EncryptLinkdata = getService('entity.linkdata');
             $EncryptLinkdata->encryptLinkdata($data);
 
             $this->Data->saveEncryptedLinkData(
@@ -38,7 +32,7 @@ class Linkdata {
         try {
             $data = $this->Data->getLinkDataRecord($key);
 
-            $DecryptLinkdata = get_service('lib.decrypt_linkdata');
+            $DecryptLinkdata = getService('entity.linkdata');
             $DecryptLinkdata->setupLinkdata($key, $data);
 
             if ($DecryptLinkdata->linkIsExpired()) {

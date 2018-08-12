@@ -9,7 +9,10 @@ $routes = new RouteCollection();
 $subCollection = new RouteCollection();
 $subCollection->add('index', new Route(
     '/', 
-    array('_controller' => '\Royl\Sharepass\Controllers\LinkdataController::index')
+    array(
+        '_controller' => '\Royl\Sharepass\Controllers\LinkdataController::invoke',
+        '_action' => 'index'
+    )
 ));
 $subCollection->setMethods(array('GET'));
 $routes->addCollection($subCollection);
@@ -18,7 +21,10 @@ $routes->addCollection($subCollection);
 $subCollection = new RouteCollection();
 $subCollection->add('generate_link', new Route(
     '/',
-    array('_controller' => '\Royl\Sharepass\Controllers\LinkdataController::add')
+    array(
+        '_controller' => '\Royl\Sharepass\Controllers\LinkdataController::invoke',
+        '_action' => 'add'
+    )
 ));
 $subCollection->setMethods(array('POST'));
 $routes->addCollection($subCollection);
@@ -27,7 +33,10 @@ $routes->addCollection($subCollection);
 $subCollection = new RouteCollection();
 $subCollection->add('view_link', new Route(
     '/link/{key}',
-    array('_controller' => '\Royl\Sharepass\Controllers\LinkdataController::view'),
+    array(
+        '_controller' => '\Royl\Sharepass\Controllers\LinkdataController::invoke',
+        '_action' => 'view'
+    ),
     array('key' => '(.*)')
 ));
 $subCollection->setMethods(array('GET'));

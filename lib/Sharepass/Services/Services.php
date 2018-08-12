@@ -1,6 +1,6 @@
 <?php
 
-namespace Royl\Sharepass\Libraries;
+namespace Royl\Sharepass\Services;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,34 +13,28 @@ class Services {
 
     public function __construct() {
         $this->Service = new ContainerBuilder();
+
         $this->Service
-            ->register('app.template', '\Royl\Sharepass\Template\AppTemplate')
+            ->register('app.dbconnection', '\Royl\Sharepass\Services\DbConnection')
             ->setPublic(true);
 
         $this->Service
-            ->register('app.dbconnection', '\Royl\Sharepass\Libraries\Db')
+            ->register('app.encrypt', '\JaegerApp\Encrypt')
             ->setPublic(true);
 
         $this->Service
-            ->register('data.linkdata', '\Royl\Sharepass\Data\Linkdata')
+            ->register('database.linkdata', '\Royl\Sharepass\Database\Linkdata')
             ->addArgument(new Reference('app.dbconnection'))
             ->setPublic(true);
 
         $this->Service
             ->register('model.linkdata', '\Royl\Sharepass\Models\Linkdata')
-            ->addArgument(new Reference('data.linkdata'))
+            ->addArgument(new Reference('database.linkdata'))
             ->setPublic(true);
 
         $this->Service
-            ->register('lib.encrypt_linkdata', '\Royl\Sharepass\Libraries\EncryptLinkdata')
-            ->setPublic(true);
-
-        $this->Service
-            ->register('lib.decrypt_linkdata', '\Royl\Sharepass\Libraries\DecryptLinkdata')
-            ->setPublic(true);
-
-        $this->Service
-            ->register('app.encrypt', '\JaegerApp\Encrypt')
+            ->register('entity.linkdata', '\Royl\Sharepass\Entities\Linkdata')
+            ->addArgument(new Reference('database.linkdata'))
             ->setPublic(true);
 
         $this->Service->compile();
