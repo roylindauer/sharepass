@@ -28,8 +28,19 @@ class Services {
 
         $this->Service
             ->register('model.linkdata', '\Royl\Sharepass\Models\Linkdata')
-            ->addArgument(new Reference('app.dbconnection'))
             ->addArgument(new Reference('data.linkdata'))
+            ->setPublic(true);
+
+        $this->Service
+            ->register('lib.encrypt_linkdata', '\Royl\Sharepass\Libraries\EncryptLinkdata')
+            ->setPublic(true);
+
+        $this->Service
+            ->register('lib.decrypt_linkdata', '\Royl\Sharepass\Libraries\DecryptLinkdata')
+            ->setPublic(true);
+
+        $this->Service
+            ->register('app.encrypt', '\JaegerApp\Encrypt')
             ->setPublic(true);
 
         $this->Service->compile();
