@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
-class Kernel {
+class SharepassHttpKernel {
     public $routes;
 
     public function __construct($routes) {

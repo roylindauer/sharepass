@@ -17,7 +17,7 @@ $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
                ->prefix('ROYLSP_')
                ->putenv(true);
 
-$Kernel = new Sharepass\Kernel($routes);
+$Kernel = new Sharepass\SharepassHttpKernel($routes);
 $Kernel->init();
 
 /**

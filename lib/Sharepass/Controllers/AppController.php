@@ -5,7 +5,6 @@ namespace Royl\Sharepass\Controllers;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Royl\Sharepass\Template;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class AppController{
 
@@ -31,7 +30,7 @@ class AppController{
             $callable = [$this, $this->action];
             $callable();
             return $this->render();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             die($e->getMessage());
         }
     }
