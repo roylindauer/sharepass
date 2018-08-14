@@ -91,8 +91,13 @@ class LinkdataEntity {
         return strtotime(date('Y-m-d H:i:s')) > strtotime($this->getExpires());
     }
 
-    public function decrypt() {
+    public function decrypt($key) {
+        $this->setEncryptionKey($key);
 
+        $encrypt = Helpers\getService('app.encrypt');
+        $encrypt->setKey($this->getEncryptionKey());
+
+        $this->setDecryptedLinkdata($encrypt->decode($this->getEncryptedLinkData()));
     }
 
     public function encrypt($data_to_encrypt) {

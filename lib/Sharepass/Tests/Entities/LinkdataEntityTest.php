@@ -101,14 +101,8 @@ namespace Royl\Sharepass\Test {
 
         public function testDecrypt() {
             $LinkdataEntity = new LinkdataEntity();
-            $LinkdataEntity->decrypt('test');
-            $this->assertEquals('encoded', $LinkdataEntity->getDecryptedLinkData());
+            $LinkdataEntity->decrypt($this->testKey);
+            $this->assertEquals('decoded', $LinkdataEntity->getDecryptedLinkData());
         }
-    /*
-
-        public function testFilterSpecialCharsFromLinkdata() {
-
-        }
-    */
     }
 }
