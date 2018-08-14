@@ -20,5 +20,8 @@
         "psr-4": {
             "Royl\\":  "./lib"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     }
 }

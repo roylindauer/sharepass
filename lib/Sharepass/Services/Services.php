@@ -28,12 +28,12 @@ class Services {
             ->setPublic(true);
 
         $this->Service
-            ->register('model.linkdata', '\Royl\Sharepass\Models\Linkdata')
+            ->register('model.linkdata', '\Royl\Sharepass\Models\LinkdataModel')
             ->addArgument(new Reference('database.linkdata'))
             ->setPublic(true);
 
         $this->Service
-            ->register('entity.linkdata', '\Royl\Sharepass\Entities\Linkdata')
+            ->register('entity.linkdata', '\Royl\Sharepass\Entities\LinkdataEntity')
             ->addArgument(new Reference('database.linkdata'))
             ->setPublic(true);
 

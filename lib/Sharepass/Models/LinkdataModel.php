@@ -3,7 +3,7 @@ namespace Royl\Sharepass\Models;
 
 use Royl\Sharepass\Services;
 
-class Linkdata {
+class LinkdataModel {
     /**
      * @var \Royl\Sharepass\Database\Linkdata
      */
@@ -16,7 +16,8 @@ class Linkdata {
     public function createLink($data) {
         try {
             $EncryptLinkdata = getService('entity.linkdata');
-            $EncryptLinkdata->encryptLinkdata($data);
+
+            $EncryptLinkdata->encrypt($data);
 
             $this->Data->saveEncryptedLinkData(
                 $EncryptLinkdata->getEncryptionKey(),
@@ -33,12 +34,18 @@ class Linkdata {
             $data = $this->Data->getLinkDataRecord($key);
 
             $DecryptLinkdata = getService('entity.linkdata');
-            $DecryptLinkdata->setupLinkdata($key, $data);
+            $DecryptLinkdata->setEncryptionKey($key);
+            $DecryptLinkdata->populate($data);
 
             if ($DecryptLinkdata->linkIsExpired()) {
                 $this->Data->deleteLink($key);
             }
-            return $DecryptLinkdata->decryptLink($data);
+
+            $encrypt = getService('app.encrypt');
+            $encrypt->setKey($this->getEncryptionKey());
+
+            $DecryptLinkdata->setRawLinkData($encrypt->decode($DecryptLinkdata->getEncryptedLinkData()));
+            return $DecryptLinkdata->sanitizeRawLinkdata();
         } catch (\Exception $e) {
 
         }
