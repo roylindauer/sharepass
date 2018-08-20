@@ -1,11 +1,24 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: rlindauer
+ * Date: 8/20/18
+ * Time: 3:24 PM
+ */
 
-use PHPUnit\Framework\TestCase;
+namespace Royl\Sharepass\Models;
 
-class LinkdataModelTest extends TestCase {
 
-    public function testCreateLink() {
-        $this->assertTrue(true);
-        $this->assertFalse(false);
+class LinkdataModelTest extends \PHPUnit_Framework_TestCase
+{
+
+    public function testGetLink()
+    {
+
+    }
+
+    public function testCreateLink()
+    {
+
     }
 }
