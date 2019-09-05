@@ -2,11 +2,13 @@
 
 namespace Royl\Sharepass\Controllers;
 
+use Royl\Sharepass\Helpers;
+
 class LinkdataController extends AppController{
 
     public function __construct()
     {
-        $this->Model = getService('model.linkdata');
+        $this->Model = Helpers\getService('model.linkdata');
         parent::__construct();
     }
 

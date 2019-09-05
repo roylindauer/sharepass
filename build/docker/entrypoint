@@ -1,0 +1,25 @@
+#!/bin/bash
+
+function fix_linux_internal_host() {
+  DOCKER_INTERNAL_HOST="host.docker.internal"
+
+  if ! grep $DOCKER_INTERNAL_HOST /etc/hosts > /dev/null ; then
+    DOCKER_INTERNAL_IP=`/sbin/ip route|awk '/default/ { print $3 }'`
+    echo -e "$DOCKER_INTERNAL_IP\t$DOCKER_INTERNAL_HOST" | tee -a /etc/hosts > /dev/null
+    echo 'Added $DOCKER_INTERNAL_HOST to hosts /etc/hosts'
+  fi
+}
+
+# Linux defaults to mapping the host to IP 172.17.0.1 which makes it
+# super easy to have a container send traffic to the host,
+# But on a mac it uses a hostname, host.docker.internal.
+# We require the container to be able to connect to the host to be able to use Xdebug.
+# This little hack adds the hostname to containers running on linux.
+#
+fix_linux_internal_host
+
+printenv | sed 's/^/export /' >> /root/project_env.sh
+
+/usr/local/bin/composer install
+
+/usr/bin/supervisord -n
