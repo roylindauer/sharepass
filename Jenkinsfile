@@ -13,7 +13,7 @@ stage("Run") {
     stage('Test') {
       echo 'Running unit tests yo'
       buildImage.inside {
-        sh './tests.sh'
+        sh 'cd /var/www/html; ./tests.sh'
       }
     }
     
