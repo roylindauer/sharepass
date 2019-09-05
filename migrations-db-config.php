@@ -2,7 +2,7 @@
 
 date_default_timezone_set('America/Los_Angeles');
 
-if (getenv('IS_DOCKER') == false ) {
+if (file_exists(BASEDIR . '/.env')) {
     $EnvLoader = (new josegonzalez\Dotenv\Loader('.env'))
         ->parse()
         ->putenv(true);

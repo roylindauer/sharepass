@@ -4,16 +4,16 @@ stage("Run") {
     def branchName = scmVars.GIT_BRANCH
 
     stage('Build') {
-      testImage = docker.build("sharepass", "--build-arg PRODUCTION=true --build-arg IS_DOCKER=true .")
-      testImage.inside {
+      buildImage = docker.build("sharepass", "--build-arg PRODUCTION=true --build-arg IS_DOCKER=true .")
+      buildImage.inside {
         sh 'php --version'
       }
     }
 
     stage('Test') {
       echo 'Running unit tests yo'
-      testImage.inside {
-        sh 'bash tests.sh'
+      buildImage.inside {
+        sh './tests.sh'
       }
     }
     

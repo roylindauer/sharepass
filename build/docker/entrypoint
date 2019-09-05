@@ -10,18 +10,26 @@ function fix_linux_internal_host() {
   fi
 }
 
-# Linux defaults to mapping the host to IP 172.17.0.1 which makes it
-# super easy to have a container send traffic to the host,
-# But on a mac it uses a hostname, host.docker.internal.
-# We require the container to be able to connect to the host to be able to use Xdebug.
-# This little hack adds the hostname to containers running on linux.
-#
-fix_linux_internal_host
+if [ -z "${PRODUCTION}" ]; then
 
-printenv | sed 's/^/export /' >> /root/project_env.sh
+  # Linux defaults to mapping the host to IP 172.17.0.1 which makes it
+  # super easy to have a container send traffic to the host,
+  # But on a mac it uses a hostname, host.docker.internal.
+  # We require the container to be able to connect to the host to be able to use Xdebug.
+  # This little hack adds the hostname to containers running on linux.
+  #
+  fix_linux_internal_host
 
-/usr/local/bin/composer install
+  /usr/local/bin/composer install
+  bash migration.sh migrations:migrate
 
-bash migration.sh migrations:migrate
+else 
+
+  printenv | sed 's/^/export /' >> /root/project_env.sh
+  bash migration.sh migrations:migrate
+
+  # GET ENV VARS AND STUFFF
+
+fi
 
 /usr/bin/supervisord -n

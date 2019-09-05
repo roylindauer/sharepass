@@ -13,7 +13,7 @@ require_once BASEDIR . '/lib/Sharepass/helpers.php';
 
 $Services = new Sharepass\Services\Services();
 
-if (getenv('IS_DOCKER') == false ) {
+if (file_exists(BASEDIR . '/.env')) {
     $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
         ->parse()
         ->putenv(true);
