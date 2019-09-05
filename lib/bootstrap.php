@@ -13,10 +13,11 @@ require_once BASEDIR . '/lib/Sharepass/helpers.php';
 
 $Services = new Sharepass\Services\Services();
 
-#$EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
-#               ->parse()
-#               ->prefix('ROYLSP_')
-#               ->putenv(true);
+if (getenv('IS_DOCKER') == false ) {
+    $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
+        ->parse()
+        ->putenv(true);
+}
 
 $Kernel = new Sharepass\SharepassHttpKernel($routes);
 $Kernel->init();

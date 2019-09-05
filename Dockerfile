@@ -1,5 +1,6 @@
 FROM chialab/php:7.2-fpm
 
+ARG IS_DOCKER=
 ARG PRODUCTION=
 ARG COMPOSER_ARGS=
 
@@ -8,7 +9,8 @@ ENV APT_DEPS supervisor nginx-extras curl default-mysql-client gpg unzip
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV PATH /composer/vendor/bin:$PATH
-ENV IS_PRODUCTION=$PRODUCTION
+ENV IS_DOCKER=$IS_DOCKER
+ENV PRODUCTION=$PRODUCTION
 
 # Linux dependencies
 RUN apt-get update -qq && \
