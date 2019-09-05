@@ -10,7 +10,7 @@ class DbConnection {
         try {
             $config = new \Doctrine\DBAL\Configuration();
             $this->connectionParams = array(
-                'url' => getenv('ROYLSP_DATABASE_URL'),
+                'url' => getenv('DATABASE_URL'),
                 'driver' => 'pdo_mysql',
             );
             $this->conn = \Doctrine\DBAL\DriverManager::getConnection($this->connectionParams, $config);

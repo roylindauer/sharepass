@@ -40,7 +40,7 @@ class LinkdataEntity {
     }
 
     public function createDefaultEncryptionKey() {
-        $this->encryptionKey = uniqid();
+        $this->encryption_key = uniqid();
     }
 
     public function getEncryptionKey() {

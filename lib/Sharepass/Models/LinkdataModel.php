@@ -24,7 +24,7 @@ class LinkdataModel {
             );
             return $EncryptLinkdata->getEncryptionKey();
         } catch (\Exception $e) {
-
+            die($e->getMessage());
         }
     }
 
@@ -33,13 +33,14 @@ class LinkdataModel {
             $data = $this->Data->getLinkDataRecord($key);
 
             $DecryptLinkdata = Helpers\getService('entity.linkdata');
-            $DecryptLinkdata->populate($data);
+            $DecryptLinkdata->populate(['data_encrypted' => $data['data'], 'expires' => $data['expires']]);
 
             if ($DecryptLinkdata->linkIsExpired()) {
                 $this->Data->deleteLink($key);
             }
 
             $DecryptLinkdata->decrypt($key);
+
             return $DecryptLinkdata->getDecryptedLinkData();
 
         } catch (\Exception $e) {

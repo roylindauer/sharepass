@@ -22,4 +22,6 @@ printenv | sed 's/^/export /' >> /root/project_env.sh
 
 /usr/local/bin/composer install
 
+bash migration.sh migrations:migrate
+
 /usr/bin/supervisord -n
