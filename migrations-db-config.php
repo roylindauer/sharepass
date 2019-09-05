@@ -2,6 +2,9 @@
 
 date_default_timezone_set('America/Los_Angeles');
 
+$BASEDIR = realpath(dirname(__DIR__));
+define('BASEDIR', $BASEDIR);
+
 if (file_exists(BASEDIR . '/.env')) {
     $EnvLoader = (new josegonzalez\Dotenv\Loader('.env'))
         ->parse()
