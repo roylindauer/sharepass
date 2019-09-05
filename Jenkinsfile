@@ -12,6 +12,9 @@ stage("Run") {
 
     stage('Test') {
       echo 'Running unit tests yo'
+      testImage.inside {
+        sh 'bash tests.sh'
+      }
     }
     
     stage('Push') {
