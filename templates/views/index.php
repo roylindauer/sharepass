@@ -4,7 +4,7 @@
         <div class="col-sm-12 text-center">
             <h2>Your link is ready</h2>
             <div class="well well-lg">
-                <p style="font-size: 2rem;"><?=getenv('ROYLSP_DOMAIN') . 'link/' . $key?></p>
+                <p style="font-size: 2rem;"><?=getenv('DOMAIN') . 'link/' . $key?></p>
             </div>
         </div>
     </div>
