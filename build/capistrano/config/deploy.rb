@@ -2,7 +2,7 @@
 lock '>= 3.3.3'
 
 set :application, 'sharepass'
-set :repo_url, 'git@git.roylindauer.com:roylindauer/sharepass.git'
+set :repo_url, 'git@github.com:roylindauer/sharepass.git'
 
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
