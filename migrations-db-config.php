@@ -3,10 +3,10 @@
 date_default_timezone_set('America/Los_Angeles');
 
 if (getenv('IS_PRODUCTION') == false ) {
-    #$EnvLoader = (new josegonzalez\Dotenv\Loader('.env'))
-    #               ->parse()
-    #               ->prefix('ROYLSP_')
-    #               ->putenv(true);
+    $EnvLoader = (new josegonzalez\Dotenv\Loader('.env'))
+                   ->parse()
+                   ->prefix('ROYLSP_')
+                   ->putenv(true);
 }
 
 return array(
