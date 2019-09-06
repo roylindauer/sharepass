@@ -4,11 +4,8 @@ services:
     image: mysql:5.7
     volumes:
       - mysqldata:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: project
-      MYSQL_USER: project
-      MYSQL_PASSWORD: project
+    env_file:
+      - build/mysql.config
     ports:
       - "3306:3306"
 
