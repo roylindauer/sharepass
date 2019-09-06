@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h1><a href="/">Sharepass</a></h1>
-                    <p class="lead">Encrypt data and share with a URL that expires after 24 hours.</p>
+                    <p class="lead">Sometimes you gotta share a password with someone.</p>
                 </div>
             </div>
         </div>
