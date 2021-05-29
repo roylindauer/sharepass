@@ -16,7 +16,7 @@ class AppController{
         $this->Template = new Template\AppTemplate();
     }
 
-    public function invoke(Request $Request) {
+    public function invoke(Request $Request): Response {
         try {
             $this->Request = $Request;
             $this->action = $this->getAttribute('_action');

@@ -19,5 +19,5 @@ if (file_exists(BASEDIR . '/.env')) {
         ->putenv(true);
 }
 
-$Kernel = new Sharepass\SharepassHttpKernel($routes);
+$Kernel = new Sharepass\Kernel($routes);
 $Kernel->init();

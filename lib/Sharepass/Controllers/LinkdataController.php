@@ -3,9 +3,10 @@
 namespace Royl\Sharepass\Controllers;
 
 use Royl\Sharepass\Helpers;
-use Symfony\Component\Routing\Annotation\Route;
 
 class LinkdataController extends AppController{
+
+    public $Model = null;
 
     public function __construct()
     {
