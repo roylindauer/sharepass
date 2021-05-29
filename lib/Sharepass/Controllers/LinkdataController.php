@@ -3,6 +3,7 @@
 namespace Royl\Sharepass\Controllers;
 
 use Royl\Sharepass\Helpers;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LinkdataController extends AppController{
 
@@ -19,7 +20,7 @@ class LinkdataController extends AppController{
         $this->setVar('key', $this->Model->createLink($_POST['mydata']));
         $this->setView('index');
     }
-    
+
     public function view(){
         $key = $this->getAttribute('key');
         $this->setVar('linkdata', $this->Model->getLink($key));
