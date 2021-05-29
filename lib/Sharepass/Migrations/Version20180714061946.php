@@ -2,18 +2,15 @@
 
 namespace Royl\Sharepass\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
 class Version20180714061946 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->addSql("CREATE TABLE `linkdata` (
               `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -25,10 +22,7 @@ class Version20180714061946 extends AbstractMigration
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
     }
 
-    /**
-     * @param Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         $this->addSql('DROP TABLE `linkedata`');
     }

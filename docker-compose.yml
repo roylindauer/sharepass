@@ -1,9 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: mysql:5.7
-    volumes:
-      - mysqldata:/var/lib/mysql
+    image: mysql:8.0
     env_file:
       - build/mysql.config
     ports:
@@ -19,8 +17,3 @@ services:
       - mysql
     volumes:
       - .:/var/www/html
-      - /var/www/html/vendor
-
-volumes:
-  ? mysqldata
-  ? vendor

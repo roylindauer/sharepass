@@ -1,3 +1,3 @@
 #!/bin/bash
 
-php vendor/bin/doctrine-migrations "$@" --configuration migrations.xml --db-configuration migrations-db-config.php
+php vendor/bin/doctrine-migrations "$@"  --db-configuration migrations-db-config.php

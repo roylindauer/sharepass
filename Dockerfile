@@ -1,4 +1,4 @@
-FROM chialab/php:7.2-fpm
+FROM chialab/php:8.0-fpm
 
 ARG IS_DOCKER=
 ARG PRODUCTION=
@@ -25,10 +25,6 @@ COPY ./build/docker/vhost.conf /etc/nginx/conf.d/vhost.conf
 
 # Supervisor
 COPY ./build/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# hirak/prestissimo
-# This is a composer plugin that downloads packages in parallel to speed up the installation process.
-RUN /usr/local/bin/composer global require hirak/prestissimo
 
 # Xdebug
 COPY ./build/docker/xdebug.ini /tmp/xdebug.ini
