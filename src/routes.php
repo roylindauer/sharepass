@@ -35,7 +35,8 @@ $routes->add('view_link', new Route(
     '/link/{key}',
     array(
         '_controller' => 'App\Controllers\LinkdataController::invoke',
-        '_action' => 'view'
+        '_action' => 'view',
+        'key' => null
     ),
     array('key' => '(.*)'),
     [],
@@ -43,3 +44,5 @@ $routes->add('view_link', new Route(
     [],
     'GET'
 ));
+
+return $routes;

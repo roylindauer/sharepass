@@ -1,8 +1,6 @@
 <?php
 namespace App\Entities;
 
-use App\Helpers;
-
 class LinkdataEntity {
 
     private $encryption_key;
@@ -94,7 +92,7 @@ class LinkdataEntity {
     public function decrypt($key) {
         $this->setEncryptionKey($key);
 
-        $encrypt = Helpers\getService('app.encrypt');
+        $encrypt = get_service('app.encrypt');
         $encrypt->setKey($this->getEncryptionKey());
 
         $this->setDecryptedLinkdata($encrypt->decode($this->getEncryptedLinkData()));
@@ -104,7 +102,7 @@ class LinkdataEntity {
         $this->createDefaultEncryptionKey();
         $this->setRawLinkData($data_to_encrypt);
 
-        $encrypt = Helpers\getService('app.encrypt');
+        $encrypt = get_service('app.encrypt');
         $encrypt->setKey($this->getEncryptionKey());
 
         $this->setEncryptedLinkdata($encrypt->encode($this->getRawLinkData()));

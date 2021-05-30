@@ -2,34 +2,33 @@
 
 namespace App\Controllers;
 
+use App\Kernel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use App\Template;
+use Symfony\Component\Templating\Loader\FilesystemLoader;
+use Symfony\Component\Templating\PhpEngine;
+use Symfony\Component\Templating\TemplateNameParser;
 
 class AppController{
 
     private $action;
     private $Request;
-    private $Template;
 
     public function __construct() {
-        $this->Template = new Template\AppTemplate();
     }
 
-    public function invoke(Request $Request): Response {
+    public function invoke(Request $Request) {
         try {
             $this->Request = $Request;
             $this->action = $this->getAttribute('_action');
-
-            $this->setView();
 
             if (!method_exists($this, $this->action)) {
                 throw new \Exception(sprintf('Method does not exist: %s', $this->action));
             }
 
             $callable = [$this, $this->action];
-            $callable();
-            return $this->render();
+            return $callable();
+
         } catch (\Exception $e) {
             die($e->getMessage());
         }
@@ -39,16 +38,22 @@ class AppController{
         return $this->Request->attributes->get($var);
     }
 
-    public function setView($override_action = false) {
-        $action = ($override_action) ? $override_action : $this->action;
-        $this->Template->setTemplate($action);
-    }
+    public function render($view = null, $vars = []){
 
-    public function setVar($var, $data) {
-        $this->Template->setVar($var, $data);
-    }
+        $view = ( $view != null ) ? $view : $this->action;
+        $view = 'views/' . $view . '.php';
 
-    public function render() {
-        return new Response($this->Template->render());
+        $filesystemLoader = new FilesystemLoader(array(
+            BASEDIR . '/templates/%name%'
+        ));
+
+        $this->Templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
+
+        $result = $this->Templating->render('layouts/layout.php', array(
+            'vars' => $vars,
+            'view_template' => $view
+        ));
+
+        return new Response($result);
     }
 }

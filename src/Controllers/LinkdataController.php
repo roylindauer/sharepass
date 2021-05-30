@@ -2,28 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Helpers;
-
 class LinkdataController extends AppController{
 
     public $Model = null;
 
     public function __construct()
     {
-        $this->Model = Helpers\getService('model.linkdata');
+        $this->Model = \get_service('model.linkdata');
         parent::__construct();
     }
 
     public function index() {
+        return $this->render('index');
     }
 
     public function add() {
-        $this->setVar('key', $this->Model->createLink($_POST['mydata']));
-        $this->setView('index');
+        return $this->render('index', ['key' => $this->Model->createLink($_POST['mydata'])]);
     }
 
-    public function view(){
-        $key = $this->getAttribute('key');
-        $this->setVar('linkdata', $this->Model->getLink($key));
+    public function view() {
+        return $this->render('view', ['linkdata' => $this->Model->getLink($this->getAttribute('key'))]);
     }
 }

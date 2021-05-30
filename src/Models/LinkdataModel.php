@@ -1,8 +1,6 @@
 <?php
 namespace App\Models;
 
-use App\Helpers;
-
 class LinkdataModel {
     /**
      * @var \App\Database\Linkdata
@@ -15,7 +13,7 @@ class LinkdataModel {
 
     public function createLink($data) {
         try {
-            $EncryptLinkdata = Helpers\getService('entity.linkdata');
+            $EncryptLinkdata = get_service('entity.linkdata');
             $EncryptLinkdata->encrypt($data);
 
             $this->Data->saveEncryptedLinkData(
@@ -32,7 +30,7 @@ class LinkdataModel {
         try {
             $data = $this->Data->getLinkDataRecord($key);
 
-            $DecryptLinkdata = Helpers\getService('entity.linkdata');
+            $DecryptLinkdata = get_service('entity.linkdata');
             $DecryptLinkdata->populate(['data_encrypted' => $data['data'], 'expires' => $data['expires']]);
 
             if ($DecryptLinkdata->linkIsExpired()) {

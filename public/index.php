@@ -6,10 +6,13 @@ $BASEDIR = realpath(dirname(__DIR__));
 define('BASEDIR', $BASEDIR);
 
 require_once BASEDIR . '/vendor/autoload.php';
-require_once BASEDIR . '/src/routes.php';
-require_once BASEDIR . '/src/helpers.php';
 
 $Services = new App\Services\Services();
+
+function get_service($service) {
+    global $Services;
+    return $Services->get($service);
+}
 
 if (file_exists(BASEDIR . '/.env')) {
     $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
@@ -17,5 +20,5 @@ if (file_exists(BASEDIR . '/.env')) {
         ->putenv(true);
 }
 
-$Kernel = new App\Kernel($routes);
+$Kernel = new App\Kernel();
 $Kernel->init();
