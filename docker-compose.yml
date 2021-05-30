@@ -7,7 +7,7 @@ services:
     ports:
       - "3306:3306"
 
-  sharepass:
+  php:
     build: .
     env_file:
       - build/dev.config
