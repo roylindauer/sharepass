@@ -1,0 +1,21 @@
+<?php
+
+date_default_timezone_set('America/Los_Angeles');
+
+$BASEDIR = realpath(dirname(__DIR__));
+define('BASEDIR', $BASEDIR);
+
+require_once BASEDIR . '/vendor/autoload.php';
+require_once BASEDIR . '/src/routes.php';
+require_once BASEDIR . '/src/helpers.php';
+
+$Services = new App\Services\Services();
+
+if (file_exists(BASEDIR . '/.env')) {
+    $EnvLoader = (new josegonzalez\Dotenv\Loader(BASEDIR . '/.env'))
+        ->parse()
+        ->putenv(true);
+}
+
+$Kernel = new App\Kernel($routes);
+$Kernel->init();

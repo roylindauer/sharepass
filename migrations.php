@@ -10,7 +10,7 @@ return [
     ],
 
     'migrations_paths' => [
-        'Royl\Sharepass\Migrations' => '/lib/Sharepass/Migrations',
+        'Royl\Sharepass\Migrations' => '/src/Sharepass/Migrations',
     ],
 
     'all_or_nothing' => true,

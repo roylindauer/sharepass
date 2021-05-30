@@ -21,7 +21,6 @@ RUN apt-get update -qq && \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 COPY ./build/docker/nginx.conf /etc/nginx/nginx.conf
-COPY ./build/docker/vhost.conf /etc/nginx/conf.d/vhost.conf
 
 # Supervisor
 COPY ./build/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
