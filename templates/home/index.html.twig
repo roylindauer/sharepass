@@ -1,1 +1,18 @@
-<h1>Heyo</h1>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>Encrypt Some Data</h2>
+                <p>Enter the data you want to share. This can be a password, or other sensitive information.
+                    You can enter up to 255 characters.
+                    The link will function for 24 hours.</p>
+                {{ form(form) }}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

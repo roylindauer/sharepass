@@ -1,11 +1,3 @@
 #!/bin/bash
 
-if [ -z "${PRODUCTION}" ]; then
-  /usr/local/bin/composer install
-else
-  printenv | sed 's/^/export /' >> /root/project_env.sh
-fi
-
-bash migration.sh migrations:migrate
-
 /usr/bin/supervisord -n
