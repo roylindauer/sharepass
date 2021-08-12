@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SecretRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JaegerApp\Encrypt;
 
 /**
  * @ORM\Entity(repositoryClass=SecretRepository::class)
@@ -52,7 +53,9 @@ class Secret
 
     public function setSecretData(?string $secret_data): self
     {
-        $this->secret_data = $secret_data;
+        $encrypt = new Encrypt();
+        $encrypt->setKey(config('encryption_key'));
+        $this->secret_data = $encrypt->encode($secret_data);
 
         return $this;
     }
