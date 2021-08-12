@@ -31,7 +31,7 @@ COPY ./config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 WORKDIR /var/www/html/
 
 COPY composer.json ./
-#COPY composer.lock ./
+COPY composer.lock ./
 
 RUN /usr/local/bin/composer install --no-scripts --no-autoloader $COMPOSER_ARGS
 
